@@ -19,25 +19,25 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const todosCollection = client.db("todosDB").collection("todos");
+    const studentCollection = client.db("studentDB").collection("student");
 
-    app.get("/todos", async (req, res) => {
+    app.get("/student", async (req, res) => {
       const query = {};
-      const cursor = todosCollection.find(query);
+      const cursor = studentCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
-    app.post("/todos", async (req, res) => {
+    app.post("/student", async (req, res) => {
       const todo = req.body;
-      const result = await todosCollection.insertOne(todo);
+      const result = await studentCollection.insertOne(todo);
       res.send(result);
     });
-    app.delete("todos/:id", async (req, res) => {
+    app.delete("student/:id", async (req, res) => {
       const id = req.params.id;
       const query = {
         _id: ObjectId(id),
       };
-      const result = await todosCollection.deleteOne(query);
+      const result = await studentCollection.deleteOne(query);
       res.send(result);
     });
   } finally {
